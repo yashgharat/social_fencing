@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.pink,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
@@ -29,39 +29,45 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  bool _obscureText = true;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+  void _toggle() => setState(() => _obscureText = !_obscureText);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
       body: Center(
+          child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 30),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+            TextField(
+                decoration: InputDecoration(
+                    labelText: 'Here',
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15)))),
+            TextField(
+              decoration: InputDecoration(
+                  suffixIcon: GestureDetector(
+                    onTap: () => _toggle(),
+                    child: Icon(
+                        _obscureText ? Icons.visibility : Icons.visibility_off),
+                  ),
+                  labelText: 'Here',
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15))),
+              obscureText: _obscureText,
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+          ]
+              .map((input) => Container(
+                    padding: EdgeInsets.only(bottom: 20),
+                    child: input,
+                  ))
+              .toList(),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ),
+      )),
     );
   }
 }
