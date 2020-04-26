@@ -1,8 +1,18 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:social_fencing/screens/authentication.dart';
+import 'package:social_fencing/screens/home_screen.dart';
+import 'package:social_fencing/services/auth_service.dart';
 
-void main() {
-  runApp(MyApp());
-}
+void main() => runApp(
+      ChangeNotifierProvider<AuthService>(
+        child: MyApp(),
+        create: (BuildContext context) {
+          return AuthService();
+        },
+      ),
+    );
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -10,64 +20,37 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.pink,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+      theme: ThemeData(primarySwatch: Colors.pink),
+      home: FutureBuilder<FirebaseUser>(
+        future: Provider.of<AuthService>(context).getUser(),
+        builder: (context, AsyncSnapshot<FirebaseUser> snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            // log error to console 
+            if (snapshot.error != null) { 
+              print("error");
+              return Text(snapshot.error.toString());
+            }
+
+            // redirect to the proper page
+            return snapshot.hasData ? HomeScreen(snapshot.data) : AuthenticationScreen();
+          } else {
+            // show loading indicator
+            return LoadingCircle();
+          }
+        },
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  bool _obscureText = true;
-
-  void _toggle() => setState(() => _obscureText = !_obscureText);
-
+class LoadingCircle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-          child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 30),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            TextField(
-                decoration: InputDecoration(
-                    labelText: 'Here',
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15)))),
-            TextField(
-              decoration: InputDecoration(
-                  suffixIcon: GestureDetector(
-                    onTap: () => _toggle(),
-                    child: Icon(
-                        _obscureText ? Icons.visibility : Icons.visibility_off),
-                  ),
-                  labelText: 'Here',
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15))),
-              obscureText: _obscureText,
-            ),
-          ]
-              .map((input) => Container(
-                    padding: EdgeInsets.only(bottom: 20),
-                    child: input,
-                  ))
-              .toList(),
-        ),
-      )),
+    return Center(
+      child: Container(
+        child: CircularProgressIndicator(),
+        alignment: Alignment(0.0, 0.0),
+      ),
     );
   }
 }

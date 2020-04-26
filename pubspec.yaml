@@ -21,7 +21,10 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
-  games_services: any
+  flutter_signin_button: ^1.0.0
+  firebase_auth:
+  firebase_core:
+  provider: ^4.0.5
   flutter:
     sdk: flutter
 

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1055515221120",
+    "firebase_url": "https://social-fencing.firebaseio.com",
+    "project_id": "social-fencing",
+    "storage_bucket": "social-fencing.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1055515221120:android:ec05594b5ff646b931da65",
+        "android_client_info": {
+          "package_name": "now.hack.social_fencing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1055515221120-7aajkuhga4vs5m5ffiv1b6i4sb6j0sa9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "now.hack.social_fencing",
+            "certificate_hash": "70f918dc43e0b14ffec2a0221722a9d1fea7c422"
+          }
+        },
+        {
+          "client_id": "1055515221120-a0bhrspb8779kme4jbo79n3kfiacluld.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmdRVp6n_bdXXp5EYb350evZ1RucqEEpw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1055515221120-a0bhrspb8779kme4jbo79n3kfiacluld.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
