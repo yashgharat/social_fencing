@@ -21,24 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(primarySwatch: Colors.pink),
-      home: FutureBuilder<FirebaseUser>(
-        future: Provider.of<AuthService>(context).getUser(),
-        builder: (context, AsyncSnapshot<FirebaseUser> snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            // log error to console 
-            if (snapshot.error != null) { 
-              print("error");
-              return Text(snapshot.error.toString());
-            }
-
-            // redirect to the proper page
-            return snapshot.hasData ? HomeScreen(snapshot.data) : AuthenticationScreen();
-          } else {
-            // show loading indicator
-            return LoadingCircle();
-          }
-        },
-      ),
+      home: HomeScreen()
     );
   }
 }
